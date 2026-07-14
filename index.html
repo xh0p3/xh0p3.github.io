@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Murder of Crows</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&family=Cinzel:wght@500;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="crt-overlay"></div>
+    <div class="scanlines"></div>
+
+    <div class="app-container">
+        <!-- Header -->
+        <header class="game-header">
+            <h1 class="glow-title" id="game-title">MURDER OF CROWS</h1>
+            <div class="lang-toggle-container">
+                <button class="lang-btn active" id="lang-en" onclick="setLanguage('en')">EN</button>
+                <button class="lang-btn" id="lang-tr" onclick="setLanguage('tr')">TR</button>
+            </div>
+            <div class="header-decor"></div>
+        </header>
+
+        <div class="game-layout">
+            <!-- Left Sidebar: Character Sheet -->
+            <aside class="sidebar character-sheet" id="char-sheet-panel">
+                <h2 class="panel-title" data-translate="char_sheet">CHARACTER SHEET</h2>
+                <div class="char-class-select" id="class-select-screen">
+                    <p class="select-instruction" data-translate="select_class_instr">Select your class to begin:</p>
+                    <button class="class-btn warrior-btn" onclick="selectClass('Warrior')">
+                        <span class="class-title" data-translate="class_warrior_title">WARRIOR</span>
+                        <span class="class-desc" data-translate="class_warrior_desc">High HP, Strong physical attacks. Uses Swords.</span>
+                    </button>
+                    <button class="class-btn rogue-btn" onclick="selectClass('Rogue')">
+                        <span class="class-title" data-translate="class_rogue_title">ROGUE</span>
+                        <span class="class-desc" data-translate="class_rogue_desc">High Dexterity, avoids attacks, sneak attacks.</span>
+                    </button>
+                    <button class="class-btn mage-btn" onclick="selectClass('Mage')">
+                        <span class="class-title" data-translate="class_mage_title">MAGE</span>
+                        <span class="class-desc" data-translate="class_mage_desc">High Intellect, casts fireballs & magic shield.</span>
+                    </button>
+                    <button class="class-btn cleric-btn" onclick="selectClass('Cleric')">
+                        <span class="class-title" data-translate="class_cleric_title">CLERIC</span>
+                        <span class="class-desc" data-translate="class_cleric_desc">High Wisdom, heals wounds & casts smites.</span>
+                    </button>
+                    <button class="class-btn ranger-btn" onclick="selectClass('Ranger')">
+                        <span class="class-title" data-translate="class_ranger_title">RANGER</span>
+                        <span class="class-desc" data-translate="class_ranger_desc">High Dexterity, uses longbows & double shots.</span>
+                    </button>
+                    <button class="class-btn paladin-btn" onclick="selectClass('Paladin')">
+                        <span class="class-title" data-translate="class_paladin_title">PALADIN</span>
+                        <span class="class-desc" data-translate="class_paladin_desc">High Strength & Armor, smites undead.</span>
+                    </button>
+                </div>
+
+                <div class="char-details hidden" id="char-stats-info">
+                    <div class="stat-group">
+                        <span class="stat-label" data-translate="name_lbl">NAME:</span>
+                        <span class="stat-value" id="stat-name">Hero</span>
+                    </div>
+                    <div class="stat-group">
+                        <span class="stat-label" data-translate="class_lbl">CLASS:</span>
+                        <span class="stat-value text-accent" id="stat-class">Warrior</span>
+                    </div>
+                    <div class="stat-group">
+                        <span class="stat-label" data-translate="level_lbl">LEVEL:</span>
+                        <span class="stat-value" id="stat-level">1</span>
+                    </div>
+                    <div class="stat-group">
+                        <span class="stat-label" data-translate="xp_lbl">XP:</span>
+                        <span class="stat-value" id="stat-xp">0 / 100</span>
+                    </div>
+                    
+                    <div class="separator"></div>
+                    
+                    <div class="stat-bar-container">
+                        <div class="stat-bar-label">HP: <span id="hp-text">20/20</span></div>
+                        <div class="progress-bar">
+                            <div class="progress-fill hp-fill" id="hp-bar" style="width: 100%"></div>
+                        </div>
+                    </div>
+
+                    <div class="separator"></div>
+
+                    <div class="stat-grid">
+                        <div class="stat-box">
+                            <span class="box-label">STR</span>
+                            <span class="box-val" id="stat-str">15</span>
+                        </div>
+                        <div class="stat-box">
+                            <span class="box-label">DEX</span>
+                            <span class="box-val" id="stat-dex">12</span>
+                        </div>
+                        <div class="stat-box">
+                            <span class="box-label">INT</span>
+                            <span class="box-val" id="stat-int">10</span>
+                        </div>
+                        <div class="stat-box">
+                            <span class="box-label">AC</span>
+                            <span class="box-val" id="stat-ac">14</span>
+                        </div>
+                    </div>
+
+                    <div class="separator"></div>
+                    
+                    <div class="stat-group">
+                        <span class="stat-label" data-translate="gold_lbl">GOLD:</span>
+                        <span class="stat-value text-gold" id="stat-gold">10 GP</span>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Main Area: The Console/Terminal -->
+            <main class="console-container">
+                <div class="console-screen" id="console-output">
+                    <!-- Boot Sequence loaded dynamically in game.js -->
+                </div>
+
+                <div class="input-line-container">
+                    <span class="prompt-symbol">&gt;</span>
+                    <input type="text" id="console-input" autofocus autocomplete="off" disabled placeholder="Select class first...">
+                </div>
+
+                <!-- Suggestion Chips for easy interaction -->
+                <div class="suggestion-chips" id="action-chips">
+                    <!-- Will be populated dynamically based on context -->
+                </div>
+            </main>
+
+            <!-- Right Sidebar: Inventory & Actions -->
+            <aside class="sidebar inventory-panel">
+                <h2 class="panel-title" data-translate="inventory_lbl">INVENTORY</h2>
+                <div class="inventory-container" id="inventory-list">
+                    <p class="empty-inventory-msg">Your pockets are empty.</p>
+                </div>
+                
+                <h2 class="panel-title margin-top" data-translate="directions_lbl">DIRECTIONS</h2>
+                <div class="direction-pad">
+                    <button class="dir-btn" onclick="handleDirectionClick('north')">N</button>
+                    <div class="dir-row">
+                        <button class="dir-btn" onclick="handleDirectionClick('west')">W</button>
+                        <button class="dir-btn center-btn" onclick="handleDirectionClick('look')">LOOK</button>
+                        <button class="dir-btn" onclick="handleDirectionClick('east')">E</button>
+                    </div>
+                    <button class="dir-btn" onclick="handleDirectionClick('south')">S</button>
+                </div>
+            </aside>
+        </div>
+
+        <footer class="game-footer">
+            <span id="footer-cmds" data-translate="footer_commands">Commands: go [direction], look, take [item], use [item], attack, stats, help</span>
+            <span>MurderSoftware &copy; 2026</span>
+        </footer>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>
