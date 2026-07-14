@@ -1328,12 +1328,14 @@ const DUNGEON_LOC = {
     astral_hearth: {
         name: { en: "The Astral Hearth", tr: "Astral Ocak" },
         description: {
-            en: "A floating platform in a swirling galaxy void. Vanthrax the Arch-Lich is channeling souls to keep the Weave rip open. Defeat him to seal the rip and win the campaign!",
-            tr: "Dönen galaksi boşluğunda yüzen bir platform. Arch-Lich Vanthrax yırtığı açık tutmak için ruhları kanalize ediyor. Yırtığı kapatmak ve seferi kazanmak için onu yenin!"
+            en: "A floating platform in a swirling galaxy void. Vanthrax the Arch-Lich is channeling souls to keep the Weave rip open. Defeat him to seal the rip and open the portal to the Drowned City of Phlan (Chapter 9) to the north!",
+            tr: "Dönen galaksi boşluğunda yüzen bir platform. Arch-Lich Vanthrax yırtığı açık tutmak için ruhları kanalize ediyor. Yırtığı kapatıp kuzeydeki Boğulmuş Phlan Şehri'ne (Bölüm 9) giden portalı açmak için onu yenin!"
         },
-        exits: { south: "sanctum_gates" },
+        exits: { south: "sanctum_gates", north: "drowned_plaza" },
+        locked: { north: "Astral Portal" },
         exitLabels: {
-            south: { en: "look back at Sanctum Gates", tr: "Tapınak Kapılarına geri bak" }
+            south: { en: "look back at Sanctum Gates", tr: "Tapınak Kapılarına geri bak" },
+            north: { en: "step through the Astral Portal to surface", tr: "Astral Portaldan geçerek yüzeye dön" }
         },
         items: [],
         monsters: [
@@ -2078,6 +2080,11 @@ function updateSuggestionChips() {
             if (addedRooms.has(targetRoom)) continue;
             addedRooms.add(targetRoom);
 
+            // Skip showing the east exit chip in jaxana_tomb if she is still sleeping or alive
+            if (state.currentRoom === "jaxana_tomb" && dir === "east" && room.monsters && room.monsters.length > 0) {
+                continue;
+            }
+
             const goCmd = state.lang === "tr" ? `git ${dir}` : `go ${dir}`;
             const labelMap = DUNGEON_LOC[state.currentRoom].exitLabels;
             let displayLabel = labelMap && labelMap[dir] ? labelMap[dir][state.lang] : `${state.lang === "tr" ? "git" : "go"} ${dir}`;
@@ -2401,12 +2408,26 @@ function movePlayer(direction) {
         return;
     }
 
-    // Runic vault gate check
-    if (room.exits[dir] === "secret_vault" && !state.readObeliskRunes) {
+    // Shadow dragon block (Floor 5)
+    if (state.currentRoom === "jaxana_tomb" && dir === "east" && room.monsters && room.monsters.length > 0) {
         writeLine(state.lang === "tr"
-            ? "Taş duvarın üzerindeki rünleri okuyamıyorsunuz. Önce Dikilitaş Odası'nda 'read runes' yazın!"
-            : "The heavy stone wall is locked by glowing Celestial runes. You cannot decipher them yet! Read the Obelisk first.", "combat-log");
+            ? "Jaxana yolu kapatıyor! Önce yanından gizlice sızmalısınız ('sneak past dragon') veya onunla savaşmalısınız."
+            : "Jaxana blocks the portal! You must sneak past her ('sneak past dragon') or defeat her first.", "combat-log");
         return;
+    }
+
+    // Runic vault gate check
+    if (room.exits[dir] === "secret_vault") {
+        if (!state.readObeliskRunes) {
+            writeLine(state.lang === "tr"
+                ? "Taş duvarın üzerindeki rünleri okuyamıyorsunuz. Önce Dikilitaş Odası'nda 'read runes' yazın!"
+                : "The heavy stone wall is locked by glowing Celestial runes. You cannot decipher them yet! Read the Obelisk first.", "combat-log");
+            return;
+        } else {
+            if (room.locked && room.locked[dir] === "Celestial Runes") {
+                delete room.locked[dir];
+            }
+        }
     }
 
     if (room.locked && room.locked[dir]) {
@@ -3345,8 +3366,10 @@ function handleCombatCommand(input) {
                     : "The defeated boss triggers the portal locks to open!", "text-gold");
 
                 const room = DUNGEON[state.currentRoom];
-                if (room.locked && room.locked.north) {
-                    delete room.locked.north;
+                if (room.locked) {
+                    for (const dir in room.locked) {
+                        delete room.locked[dir];
+                    }
                 }
             }
 
