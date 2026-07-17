@@ -17,5 +17,10 @@ window.setLanguage = setLanguage;
 
 // Start Game
 initDungeon();
-renderBootArt();
-updateUI();
+const savedLang = localStorage.getItem("moc_lang");
+if (savedLang) {
+    setLanguage(savedLang);
+} else {
+    renderBootArt();
+    updateUI();
+}

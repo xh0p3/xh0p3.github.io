@@ -30,6 +30,7 @@ function logCommand(text) {
 
 function setLanguage(lang) {
     state.lang = lang;
+    localStorage.setItem("moc_lang", lang);
 
     document.getElementById("lang-en").classList.toggle("active", lang === "en");
     document.getElementById("lang-tr").classList.toggle("active", lang === "tr");

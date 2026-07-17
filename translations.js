@@ -81,7 +81,20 @@ const TRANSLATIONS = {
         drink_what: "Drink what?",
         unlock_what: "Unlock what?",
         unrecognized: "Command '{cmd}' not recognized.",
-        combat_options_only: "In combat, choose 'attack', 'flee', or 'use scroll'."
+        combat_options_only: "In combat, choose 'attack', 'flee', or 'use scroll'.",
+        changelog_link: "Changelog / Patch Notes",
+        changelog_title: "PATCH NOTES & CHANGELOG",
+        special_thanks_title: "SPECIAL THANKS",
+        special_thanks_subtitle: "We extend our deepest gratitude to the brave souls who helped shape, playtest, and support the development of Murder of Crows:",
+        thanks_playtesters_title: "Rath141",
+        thanks_playtesters_desc: "The social terrorist of Sanctum Sanctorum, i thank to thee.",
+        thanks_doomguides_title: "Sarcobesto",
+        thanks_doomguides_desc: "Thank you for the weaponized autism flavor and sarcasm.",
+        thanks_adventurer_title: "And to You, Adventurer",
+        thanks_adventurer_desc: "For hearing the call and stepping into the darkness of Valhingen Graveyard.",
+        back_to_game: "BACK TO GAME",
+        version: "Version",
+        patch_date: "Date"
     },
     tr: {
         char_sheet: "KARAKTER FORMU",
@@ -165,6 +178,19 @@ const TRANSLATIONS = {
         drink_what: "Ne içeceksiniz?",
         unlock_what: "Ne açacaksınız?",
         unrecognized: "Komut '{cmd}' anlaşılamadı.",
-        combat_options_only: "Savaşta sadece 'attack', 'flee' veya 'use scroll' komutlarını seçebilirsiniz."
+        combat_options_only: "Savaşta sadece 'attack', 'flee' veya 'use scroll' komutlarını seçebilirsiniz.",
+        changelog_link: "Yama Notları / Değişiklik Günlüğü",
+        changelog_title: "YAMA NOTLARI VE DEĞİŞİKLİK GÜNLÜĞÜ",
+        special_thanks_title: "ÖZEL TEŞEKKÜRLER",
+        special_thanks_subtitle: "Murder of Crows'un şekillenmesine, test edilmesine ve geliştirilmesine yardımcı olan cesur ruhlara en içten şükranlarımızı sunarız:",
+        thanks_playtesters_title: "Rath141",
+        thanks_playtesters_desc: "Sanctum Sanctorum'un sosyal teröristi, sana teşekkür ederim.",
+        thanks_doomguides_title: "Sarcobesto",
+        thanks_doomguides_desc: "Silahlandırılmış otizm esintisi ve sarkazm için teşekkürler.",
+        thanks_adventurer_title: "Ve Size, Maceracı",
+        thanks_adventurer_desc: "Çağrıyı duyup Valhingen Mezarlığı'nın karanlığına adım attığınız için.",
+        back_to_game: "OYUNA DÖN",
+        version: "Sürüm",
+        patch_date: "Tarih"
     }
 };

@@ -527,6 +527,21 @@ body {
     color: var(--text-muted);
 }
 
+.changelog-footer-link {
+    color: var(--accent-color);
+    text-decoration: none;
+    border-bottom: 1px dashed var(--panel-border);
+    margin-right: 15px;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    transition: all 0.15s ease;
+}
+
+.changelog-footer-link:hover {
+    border-bottom-color: var(--accent-color);
+    text-shadow: var(--accent-glow);
+}
+
 /* Helpers */
 .hidden {
     display: none !important;
